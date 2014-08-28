@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [ $1 == "clean" ] 2> /dev/null
+then
+   rm *_ui.py 2> /dev/null
+   rm *_rc.py 2> /dev/null
+else
+   for f in *.ui 
+   do 
+      g=${f%.ui}_ui.py 
+      echo "Generating $g"
+      pyuic4 $f -o $g 
+   done
+
+   for f in *.qrc 
+   do 
+      g=${f%.qrc}_rc.py 
+      echo "Generating $g"
+      pyrcc4 -py3 $f -o $g 
+   done
+fi

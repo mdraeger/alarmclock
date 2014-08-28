@@ -1,0 +1,26 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+   <file>icons/Adium-Bird-Sleep-icon.png</file>
+   <file>icons/control-fastforward-icon.png</file>
+   <file>icons/control-pause-icon.png</file>
+   <file>icons/control-play-icon.png</file>
+   <file>icons/control-rewind-icon.png</file>
+   <file>icons/control-stop-icon.png</file>
+   <file>icons/fast-forward-icon.png</file>
+   <file>icons/Music-icon.png</file>
+   <file>icons/Music-Piano-Chello-icon.png</file>
+   <file>icons/speaker-volume-control-down-icon.png</file>
+   <file>icons/speaker-volume-control-up-icon.png</file>
+   <file>icons/time-icon.png</file>
+   <file>icons/Toolbar-MP3-Play-icon.png</file>
+   <file>wallpapers/girly-skulls-pink-hearts.jpg</file>
+   <file>wallpapers/girly-punk-love-hearts.jpg</file>
+   <file>wallpapers/wallpaper.big-wEm.cs.png</file>
+   <file>wallpapers/girly-pink.jpg</file>
+   <file>wallpapers/d32ccdc2935d0fc2153fb4379cbca8f0.jpg</file>
+   <file>wallpapers/baby-girl-rose-pink.gif</file>
+   <file>wallpapers/913Pink_Empathy.jpg</file>
+   <file>wallpapers/704423-bigthumbnail.jpg</file>
+   <file>wallpapers/15Autumn-Pink.jpg</file>
+</qresource>
+</RCC>
