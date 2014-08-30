@@ -22,7 +22,8 @@
   <property name="styleSheet">
    <string notr="true">QMainWindow{
 	background: transparent;
-	background-image: url(:/wallpapers/girly-pink.jpg);
+	border-image: url(:/wallpapers/girly-pink.jpg);
+	background-repeat: none;
 }
 
 QFrame {

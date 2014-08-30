@@ -34,8 +34,8 @@ class PyAnalogClock(QtGui.QWidget):
          QtCore.QPoint(0,-50)
       ])
 
-      self.hourColor = QtGui.QColor(0,127,0)
-      self.minuteColor = QtGui.QColor(0,127,127,191)
+      self.hourColor = QtGui.QColor(0,0,0)
+      self.minuteColor = QtGui.QColor(0,0,0,191)
 
    def paintEvent(self, event):
       side = min(self.width(), self.height())

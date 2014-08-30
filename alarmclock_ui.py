@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'alarmclock.ui'
 #
-# Created: Thu Aug 28 22:29:29 2014
+# Created: Fri Aug 29 01:30:01 2014
 #      by: PyQt4 UI code generator 4.11.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -34,7 +34,8 @@ class Ui_mainWindow(object):
         mainWindow.setSizePolicy(sizePolicy)
         mainWindow.setStyleSheet(_fromUtf8("QMainWindow{\n"
 "    background: transparent;\n"
-"    background-image: url(:/wallpapers/girly-pink.jpg);\n"
+"    border-image: url(:/wallpapers/girly-pink.jpg);\n"
+"    background-repeat: none;\n"
 "}\n"
 "\n"
 "QFrame {\n"
