@@ -1,17 +1,18 @@
 import gi
 gi.require_version('Gst', '1.0')
 from gi.repository import GObject, Gst
-from PyQt4.QtCore import QObject, pyqtSignal
+from PyQt4.QtCore import QObject, QTimer, pyqtSignal
 
 GObject.threads_init()
 Gst.init(None)
 
 class Player(QObject):
     currentPositionSignal = pyqtSignal(float, float)
-    currentSongTitleSignal = pyqtSignal(ststr)
+    currentSongTitleSignal = pyqtSignal(str)
     currentStateSignal = pyqtSignal(bool)
 
-    def __init__(self, uri):
+    def __init__(self, parent, uri):
+        super(Player, self).__init__(parent)
         self.playing = False
         self.player = Gst.ElementFactory.make('playbin', 'player')
         bus = self.player.get_bus()
@@ -19,6 +20,9 @@ class Player(QObject):
         self.player.connect("about-to-finish", self.on_finished)
         self.currentUri = uri
         self.__emitCurrentPosition__()
+
+        self.positionTimer = QTimer(self)
+        self.positionTimer.timeout.connect(self.__emitCurrentPosition__)
 
     def __emitCurrentPosition__(self):
         current = self.player.query_position(Gst.Format.TIME)[1] / Gst.SECOND
@@ -37,17 +41,24 @@ class Player(QObject):
             err, debug = message.parse_error()
             print ("Error: %s" % err, debug)
 
+    def on_finished(self, player):
+        self.playing = False
+        self.player.set_state(Gst.State.NULL)
+        self.positionTimer.stop()
+        self.__emitCurrentPosition__()
+
     def __play__(self):
         self.player.set_property("uri", self.currentUri)
         self.player.set_state(Gst.State.PLAYING)
         self.playing = True
-        GObject.timeout_add(1000, self.__emitCurrentPosition__)
+        self.positionTimer.start(1000)
         
     def __pause__(self):
         if not self.playing: 
             raise Exception('StateError', 'A non-playing player cannot pause')
         self.player.set_state(Gst.State.PAUSED)
         self.playing = False
+        self.positionTimer.stop()
         self.__emitCurrentPosition__()
 
     def togglePlayPause(self):
@@ -61,3 +72,4 @@ class Player(QObject):
         duration = self.player.query_duration(Gst.Format.TIME)[1] / Gst.SECOND
         self.player.set_state(Gst.State.NULL)
         self.currentPositionSignal.emit(0.0, duration)
+        self.positionTimer.stop()

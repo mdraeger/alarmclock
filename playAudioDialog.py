@@ -7,8 +7,6 @@ from translate import _translate
 
 import playAudioDialog_ui
 
-import player
-
 class PlayAudioDialog(QDialog, playAudioDialog_ui.Ui_playAudioDialog):
    def __init__(self, parent=None):
       super(PlayAudioDialog, self).__init__(parent)
@@ -21,11 +19,10 @@ class PlayAudioDialog(QDialog, playAudioDialog_ui.Ui_playAudioDialog):
 
       self.filePath = ""
       self.sleep = False
-      self.sleepTimer = QTimer(self)
-      self.sleepTimer.setSingleShot(True)
+      self.sleepTime = self.sleepTimeEdit.time()
 
    def chooseFileAndSetSleepMode(self):
-      fileName = QFileDialog.getOpenFileName(self, caption="Wecklied aussuchen", directory=".",filter="Audio files *.mp3 *.ogg *.wav")
+      fileName = QFileDialog.getOpenFileName(self, caption=_translate("playAudioDialog", "Wecklied aussuchen", None), directory=".",filter=_translate("playAudioDialog", "Audio files *.mp3 *.ogg *.wav", None))
       self.lineEdit.setText(fileName)
 
    def toggleSleepTimeEdit(self):
@@ -35,6 +32,5 @@ class PlayAudioDialog(QDialog, playAudioDialog_ui.Ui_playAudioDialog):
       self.filePath = self.lineEdit.text()
       self.sleep = self.sleepModeCheckBox.isChecked()
       if self.sleep:
-         sleepTime = self.sleepTimeEdit.time()
-         self.sleepTimer.start((sleepTime.hour()*60+sleepTime.minute())*60*1000)
+         self.sleepTime = self.sleepTimeEdit.time()
       QDialog.accept(self)
