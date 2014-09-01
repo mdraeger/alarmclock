@@ -5,6 +5,10 @@
 This little application resembles a very simple alarm clock that uses the omxplayer as backend. 
 
 It is intended to run on my daughter's Raspberry Pi which is embedded in her LEGO Friends motor yacht.
+The gui is optimized for a 320x240 LCD display with touch input. 
+
+## Requirements
+The player requires Gstreamer-1.0 or later and the python-gobject bindings install for Python3. Also Qt4.
 
 ## Design
 
