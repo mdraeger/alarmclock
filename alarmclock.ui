@@ -137,19 +137,6 @@ QToolButton {
       <normaloff>:/icons/control-fastforward-icon.png</normaloff>:/icons/control-fastforward-icon.png</iconset>
     </property>
    </widget>
-   <widget class="QSlider" name="positionSlider">
-    <property name="geometry">
-     <rect>
-      <x>9</x>
-      <y>144</y>
-      <width>281</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
    <widget class="QToolButton" name="chooseAlarmSoundButton">
     <property name="geometry">
      <rect>

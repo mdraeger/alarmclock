@@ -17,7 +17,7 @@ class Player(QObject):
         self.player = Gst.ElementFactory.make('playbin', 'player')
         bus = self.player.get_bus()
         bus.connect("message", self.on_message)
-        self.player.connect("about-to-finish", self.on_finished)
+#        self.player.connect("about-to-finish", self.on_finished)
         self.currentUri = uri
         self.__emitCurrentPosition__()
 
@@ -43,9 +43,9 @@ class Player(QObject):
 
     def on_finished(self, player):
         self.playing = False
-        self.player.set_state(Gst.State.NULL)
         self.positionTimer.stop()
         self.__emitCurrentPosition__()
+        self.player.set_state(Gst.State.NULL)
 
     def __play__(self):
         self.player.set_property("uri", self.currentUri)
@@ -66,6 +66,10 @@ class Player(QObject):
             self.__pause__()
         else:
             self.__play__()
+
+    def seek(self, seek_pos):
+        nanosecs = Gst.SECOND * seek_pos
+        self.player.seek_simple(Gst.Format.TIME, Gst.SeekFlags.FLUSH | Gst.SeekFlags.KEY_UNIT, nanosecs)
 
     def stop(self):
         self.playing = False

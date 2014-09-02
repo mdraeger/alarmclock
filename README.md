@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This little application resembles a very simple alarm clock that uses the omxplayer as backend. 
+This little application resembles a very simple alarm clock that uses the gstreamer as backend. On the pi I connected gstreamer with omx to exploit the hardware acceleration.
 
 It is intended to run on my daughter's Raspberry Pi which is embedded in her LEGO Friends motor yacht.
 The gui is optimized for a 320x240 LCD display with touch input. 

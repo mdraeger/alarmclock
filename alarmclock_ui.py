@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'alarmclock.ui'
 #
-# Created: Fri Aug 29 01:30:01 2014
+# Created: Tue Sep  2 17:18:02 2014
 #      by: PyQt4 UI code generator 4.11.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -83,10 +83,6 @@ class Ui_mainWindow(object):
         icon5.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/control-fastforward-icon.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.forwardButton.setIcon(icon5)
         self.forwardButton.setObjectName(_fromUtf8("forwardButton"))
-        self.positionSlider = QtGui.QSlider(self.centralwidget)
-        self.positionSlider.setGeometry(QtCore.QRect(9, 144, 281, 20))
-        self.positionSlider.setOrientation(QtCore.Qt.Horizontal)
-        self.positionSlider.setObjectName(_fromUtf8("positionSlider"))
         self.chooseAlarmSoundButton = QtGui.QToolButton(self.centralwidget)
         self.chooseAlarmSoundButton.setGeometry(QtCore.QRect(10, 20, 32, 32))
         icon6 = QtGui.QIcon()
