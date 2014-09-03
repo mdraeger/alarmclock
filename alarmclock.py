@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import sys
 
 from PyQt4.QtCore import *
@@ -53,24 +54,23 @@ class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
              timeToSleep = (rawTime.hour() * 60 + rawTime.minute()) * 60 * 1000
              self.sleepTimer.start(timeToSleep)
          
-         self.audioPlayer = Player(self, 'file://' + dialog.filePath)
+         self.audioPlayer = Player(self, ['file://' + dialog.filePath])
          # connect the player and button signals
-         self.playPauseButton.clicked.connect(self.togglePlayPause)
+         self.playPauseButton.clicked.connect(self.audioPlayer.togglePlayPause)
          self.stopButton.clicked.connect(self.stop)
          self.audioPlayer.currentPositionSignal.connect(self.updateSliderAndStatus)
+         self.audioPlayer.currentStateSignal.connect(self.updatePlayButton)
          self.positionSlider.sliderReleased.connect(self.seek)
          self.positionSlider.clicked.connect(self.seek)
-         self.togglePlayPause()
 
    def seek(self):
       self.audioPlayer.seek(self.positionSlider.value())
 
-   def togglePlayPause(self):
-      if self.audioPlayer.playing:
-        self.playPauseButton.setIcon(QIcon(":/icons/control-play-icon.png"))
-      else:
+   def updatePlayButton(self, playerState):
+      if playerState:
         self.playPauseButton.setIcon(QIcon(":/icons/control-pause-icon.png"))
-      self.audioPlayer.togglePlayPause()
+      else:
+        self.playPauseButton.setIcon(QIcon(":/icons/control-play-icon.png"))
    
    def stop(self):
       self.playPauseButton.setIcon(QIcon(":/icons/control-play-icon.png"))
