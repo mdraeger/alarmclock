@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'alarmclock.ui'
 #
-# Created: Tue Sep  2 17:18:02 2014
+# Created: Sat Sep  6 22:16:43 2014
 #      by: PyQt4 UI code generator 4.11.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -90,13 +90,13 @@ class Ui_mainWindow(object):
         self.chooseAlarmSoundButton.setIcon(icon6)
         self.chooseAlarmSoundButton.setIconSize(QtCore.QSize(48, 48))
         self.chooseAlarmSoundButton.setObjectName(_fromUtf8("chooseAlarmSoundButton"))
-        self.snoozeButton = QtGui.QToolButton(self.centralwidget)
-        self.snoozeButton.setGeometry(QtCore.QRect(260, 100, 32, 32))
+        self.toggleAlarmOnOffButton = QtGui.QToolButton(self.centralwidget)
+        self.toggleAlarmOnOffButton.setGeometry(QtCore.QRect(260, 100, 32, 32))
         icon7 = QtGui.QIcon()
         icon7.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/Adium-Bird-Sleep-icon.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.snoozeButton.setIcon(icon7)
-        self.snoozeButton.setIconSize(QtCore.QSize(48, 48))
-        self.snoozeButton.setObjectName(_fromUtf8("snoozeButton"))
+        self.toggleAlarmOnOffButton.setIcon(icon7)
+        self.toggleAlarmOnOffButton.setIconSize(QtCore.QSize(48, 48))
+        self.toggleAlarmOnOffButton.setObjectName(_fromUtf8("toggleAlarmOnOffButton"))
         self.changeAlarmTimeButton = QtGui.QToolButton(self.centralwidget)
         self.changeAlarmTimeButton.setGeometry(QtCore.QRect(260, 20, 32, 32))
         icon8 = QtGui.QIcon()
@@ -133,7 +133,7 @@ class Ui_mainWindow(object):
         self.stopButton.setText(_translate("mainWindow", "...", None))
         self.forwardButton.setText(_translate("mainWindow", "...", None))
         self.chooseAlarmSoundButton.setText(_translate("mainWindow", "...", None))
-        self.snoozeButton.setText(_translate("mainWindow", "...", None))
+        self.toggleAlarmOnOffButton.setText(_translate("mainWindow", "...", None))
         self.changeAlarmTimeButton.setText(_translate("mainWindow", "...", None))
         self.listenNowButton.setText(_translate("mainWindow", "...", None))
 

@@ -8,13 +8,13 @@ from translate import _translate
 import chooseAlarmDialog_ui
 
 class ChooseAlarmDialog(QDialog, chooseAlarmDialog_ui.Ui_chooseAlarmDialog):
-   def __init__(self, parent=None):
+   def __init__(self, alarmSongPath, parent=None):
       super(ChooseAlarmDialog, self).__init__(parent)
       self.setupUi(self)
       self.openFileDialogButton.clicked.connect(self.chooseFile)
       self.buttonBox.accepted.connect(self.accept)
       self.buttonBox.rejected.connect(self.reject)
-      self.alarmSongPath = ""
+      self.alarmSongPath = alarmSongPath
 
    def chooseFile(self):
       dialog = QFileDialog(self)

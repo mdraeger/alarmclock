@@ -18,13 +18,17 @@ from settingsHandler import SettingsHandler
 
 import alarmclock_rc
 
+ONEDAYMSEC = 24*60*60*1000
+
 class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
 
    def __init__(self, parent=None):
       super(MainWindow, self).__init__(parent)
 
+      # settings from xml
       self.settingsHandler = SettingsHandler('settings.xml')
 
+      # set up gui elements
       self.setupUi(self)
       self.clockWidget = PyAnalogClock(self.clockFrame)
       self.positionSlider = MyQSlider(self.centralwidget)
@@ -32,26 +36,46 @@ class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
       self.positionSlider.setOrientation(Qt.Horizontal)
       self.positionSlider.setObjectName("positionSlider")
 
+      # connect signals
       self.chooseAlarmSoundButton.clicked.connect(self.chooseAlarm)
       self.listenNowButton.clicked.connect(self.playAudio)
       self.changeAlarmTimeButton.clicked.connect(self.setAlarmTime)
+      self.toggleAlarmOnOffButton.clicked.connect(self.toggleAlarmOnOff)
 
-      self.alarmTime = QTime.fromString(self.settingsHandler.settings['alarmtime'],'hh:mm')
-      self.alarmSongPath = self.settingsHandler.settings['alarmsong']
-      self.snoozeTime = QTime.fromString(self.settingsHandler.settings['snooze'], 'mm:ss')
-
-      self.currentArtistTitle = ""
-
+      # sleep timer setup
       self.sleepTimer = QTimer(self)
       self.sleepTimer.setSingleShot(True)
       self.sleepTimer.timeout.connect(self.stop)
 
+      # alarm time setup
+      self.alarmActive = False
+      self.alarmTime = QTime.fromString(self.settingsHandler.settings['alarmtime'],'hh:mm')
+      self.alarmSongPath = self.settingsHandler.settings['alarmsong']
+      self.snoozeTime = QTime.fromString(self.settingsHandler.settings['snooze'], 'mm:ss')
+      self.alarmTimer = QTimer()
+      self.alarmTimer.setSingleShot(True)
+      self.alarmTimer.timeout.connect(self.playAlarm)
+
+      # audio player elements
       self.audioPlayer = None
+      self.currentArtistTitle = ""
 
    def chooseAlarm(self):
-      dialog = ChooseAlarmDialog(self)
+      dialog = ChooseAlarmDialog(self.alarmSongPath, self)
       if dialog.exec_():
          self.alarmSongPath = dialog.alarmSongPath
+         self.settingsHandler.set('alarmsong', 'file://' + self.alarmSongPath)
+
+   def toggleAlarmOnOff(self):
+      if self.alarmActive:
+         self.alarmTimer.stop()
+      else:
+         timeTillNextAlarm = (ONEDAYMSEC + QTime.currentTime().msecsTo(self.alarmTime)) % ONEDAYMSEC
+         self.alarmTimer.start(timeTillNextAlarm)
+         self.alarmActive = True
+
+   def playAlarm(self):
+      self.setupAndStartPlayer([self.alarmSongPath])
 
    def playAudio(self):
       dialog = PlayAudioDialog(self)
@@ -60,8 +84,10 @@ class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
              rawTime = dialog.sleepTime
              timeToSleep = (rawTime.hour() * 60 + rawTime.minute()) * 60 * 1000
              self.sleepTimer.start(timeToSleep)
-         
-         self.audioPlayer = Player(self, ['file://' + dialog.filePath])
+         self.setupAndStartPlayer(['file://' + dialog.filePath])
+
+   def setupAndStartPlayer(self, files):
+         self.audioPlayer = Player(self, files)
          # connect the player and button signals
          self.playPauseButton.clicked.connect(self.audioPlayer.togglePlayPause)
          self.stopButton.clicked.connect(self.stop)
@@ -99,8 +125,11 @@ class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
       self.statusbar.showMessage(text)
 
    def setAlarmTime(self):
-      dialog = SetAlarmTimeDialog(self)
-      dialog.exec_()
+      dialog = SetAlarmTimeDialog(self.alarmTime, self)
+      if dialog.exec_():
+         self.alarmTime = dialog.alarmTime
+         self.settingsHandler.set('alarmtime', self.alarmTime.toString("hh:mm"))
+         self.toggleAlarmOnOff()
 
 if __name__ == '__main__':
    app = QApplication(sys.argv)

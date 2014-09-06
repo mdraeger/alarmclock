@@ -26,6 +26,7 @@ class Player(QObject):
         self.positionTimer.timeout.connect(self.__emitCurrentPosition__)
         # initialize with first song from list
         self.player.set_property("uri", self.playlist.pop(0))
+        self.__play__()
 
     def __emitCurrentPosition__(self):
         current = self.player.query_position(Gst.Format.TIME)[1] / Gst.SECOND

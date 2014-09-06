@@ -160,7 +160,7 @@ QToolButton {
      </size>
     </property>
    </widget>
-   <widget class="QToolButton" name="snoozeButton">
+   <widget class="QToolButton" name="toggleAlarmOnOffButton">
     <property name="geometry">
      <rect>
       <x>260</x>
