@@ -14,6 +14,7 @@ from clockWidget import PyAnalogClock
 from myQSlider import MyQSlider
 
 from player import Player
+from settingsHandler import SettingsHandler
 
 import alarmclock_rc
 
@@ -21,6 +22,9 @@ class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
 
    def __init__(self, parent=None):
       super(MainWindow, self).__init__(parent)
+
+      self.settingsHandler = SettingsHandler('settings.xml')
+
       self.setupUi(self)
       self.clockWidget = PyAnalogClock(self.clockFrame)
       self.positionSlider = MyQSlider(self.centralwidget)
@@ -32,8 +36,9 @@ class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
       self.listenNowButton.clicked.connect(self.playAudio)
       self.changeAlarmTimeButton.clicked.connect(self.setAlarmTime)
 
-      self.alarmTime = QTime()
-      self.alarmSongPath = ""
+      self.alarmTime = QTime.fromString(self.settingsHandler.settings['alarmtime'],'hh:mm')
+      self.alarmSongPath = self.settingsHandler.settings['alarmsong']
+      self.snoozeTime = QTime.fromString(self.settingsHandler.settings['snooze'], 'mm:ss')
 
       self.currentArtistTitle = ""
 
