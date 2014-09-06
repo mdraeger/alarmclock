@@ -35,6 +35,8 @@ class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
       self.alarmTime = QTime()
       self.alarmSongPath = ""
 
+      self.currentArtistTitle = ""
+
       self.sleepTimer = QTimer(self)
       self.sleepTimer.setSingleShot(True)
       self.sleepTimer.timeout.connect(self.stop)
@@ -60,6 +62,7 @@ class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
          self.stopButton.clicked.connect(self.stop)
          self.audioPlayer.currentPositionSignal.connect(self.updateSliderAndStatus)
          self.audioPlayer.currentStateSignal.connect(self.updatePlayButton)
+         self.audioPlayer.currentSongArtistTitleSignal.connect(self.updateArtistTitle)
          self.positionSlider.sliderReleased.connect(self.seek)
          self.positionSlider.clicked.connect(self.seek)
 
@@ -71,6 +74,9 @@ class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
         self.playPauseButton.setIcon(QIcon(":/icons/control-pause-icon.png"))
       else:
         self.playPauseButton.setIcon(QIcon(":/icons/control-play-icon.png"))
+
+   def updateArtistTitle(self, artistTitle):
+      self.currentArtistTitle = artistTitle
    
    def stop(self):
       self.playPauseButton.setIcon(QIcon(":/icons/control-play-icon.png"))
@@ -82,7 +88,7 @@ class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
    def updateSliderAndStatus(self, currentPosition, duration):
       self.positionSlider.setRange(0,duration)
       self.positionSlider.setSliderPosition(currentPosition)
-      self.updateStatusBar("%d:%02d / %d:%02d" % (currentPosition/60, currentPosition %60, duration /60, duration % 60))
+      self.updateStatusBar("%s, %d:%02d / %d:%02d" % (self.currentArtistTitle, currentPosition/60, currentPosition %60, duration /60, duration % 60))
 
    def updateStatusBar(self, text):
       self.statusbar.showMessage(text)

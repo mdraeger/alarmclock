@@ -8,7 +8,7 @@ Gst.init(None)
 
 class Player(QObject):
     currentPositionSignal = pyqtSignal(float, float)
-    currentSongTitleSignal = pyqtSignal(str)
+    currentSongArtistTitleSignal = pyqtSignal(str)
     currentStateSignal = pyqtSignal(bool)
 
     def __init__(self, parent, playlist):
@@ -16,6 +16,7 @@ class Player(QObject):
         self.playing = False
         self.player = Gst.ElementFactory.make('playbin', 'player')
         bus = self.player.get_bus()
+        bus.add_signal_watch()
         bus.connect("message", self.on_message)
         self.player.connect("about-to-finish", self.on_finished)
         self.playlist = playlist
@@ -33,16 +34,20 @@ class Player(QObject):
 
     def on_message(self, bus, message):
         t = message.type
-        print (t)
-        print (message)
-        if t == Gst.Message.EOS:
+        if t == Gst.MessageType.EOS:
             self.stop()
 
-        elif t == Gst.Message.ERROR:
+        elif t == Gst.MessageType.ERROR:
             self.player.set_state(Gst.State.NULL)
             self.playing = False
             err, debug = message.parse_error()
             print ("Error: %s" % err, debug)
+
+        elif t == Gst.MessageType.TAG:
+            taglist = message.parse_tag()
+            artist = taglist.get_string('artist')[1]
+            title = taglist.get_string('title')[1]
+            self.currentSongArtistTitleSignal.emit("%s (%s)" % (title, artist))
 
     def on_finished(self, player):
         if len (self.playlist) > 0:
