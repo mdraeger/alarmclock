@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'alarmclock.ui'
 #
-# Created: Sat Sep  6 22:16:43 2014
+# Created: Sun Sep  7 23:55:03 2014
 #      by: PyQt4 UI code generator 4.11.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -93,7 +93,7 @@ class Ui_mainWindow(object):
         self.toggleAlarmOnOffButton = QtGui.QToolButton(self.centralwidget)
         self.toggleAlarmOnOffButton.setGeometry(QtCore.QRect(260, 100, 32, 32))
         icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/Adium-Bird-Sleep-icon.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon7.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/Alarm-clock-disabled-icon.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.toggleAlarmOnOffButton.setIcon(icon7)
         self.toggleAlarmOnOffButton.setIconSize(QtCore.QSize(48, 48))
         self.toggleAlarmOnOffButton.setObjectName(_fromUtf8("toggleAlarmOnOffButton"))

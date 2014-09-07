@@ -174,7 +174,7 @@ QToolButton {
     </property>
     <property name="icon">
      <iconset resource="alarmclock.qrc">
-      <normaloff>:/icons/Adium-Bird-Sleep-icon.png</normaloff>:/icons/Adium-Bird-Sleep-icon.png</iconset>
+      <normaloff>:/icons/Alarm-clock-disabled-icon.png</normaloff>:/icons/Alarm-clock-icon.png</iconset>
     </property>
     <property name="iconSize">
      <size>

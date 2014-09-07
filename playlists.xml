@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<playlists>
+   <playlist name="Van Halen" path="/home/marco/devel/alarmclock/vanhalenjump.mp3" isDirectory="False" />
+   <playlist name="all" path="/home/marco/devel/alarmclock/" isDirectory="True" />
+</playlists>

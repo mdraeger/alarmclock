@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><settings>
    <setting name="alarmsong" value="file:///home/marco/devel/alarmclock/survivoreyeofthetiger.mp3"/>
-   <setting name="alarmtime" value="22:42"/>
+   <setting name="alarmtime" value="01:53"/>
    <setting name="snooze" value="05:00"/>
 </settings>

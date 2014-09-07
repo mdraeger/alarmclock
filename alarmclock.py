@@ -1,4 +1,22 @@
 #!/usr/bin/env python3
+
+##    alarmclock (resembles a an alarm clock for raspberry pi with a 
+##    2.8" LCD touch display 
+##    Copyright (C) 2014  Marco Draeger
+##
+##    This program is free software: you can redistribute it and/or modify
+##    it under the terms of the GNU General Public License as published by
+##    the Free Software Foundation, either version 3 of the License, or
+##    (at your option) any later version.
+##
+##    This program is distributed in the hope that it will be useful,
+##    but WITHOUT ANY WARRANTY; without even the implied warranty of
+##    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##    GNU General Public License for more details.
+##
+##    You should have received a copy of the GNU General Public License
+##    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 import sys
 
 from PyQt4.QtCore import *
@@ -10,6 +28,7 @@ import alarmclock_ui
 from chooseAlarmDialog import ChooseAlarmDialog
 from playAudioDialog import PlayAudioDialog
 from setAlarmTimeDialog import SetAlarmTimeDialog
+from alarmHandleDialog import AlarmHandleDialog 
 from clockWidget import PyAnalogClock
 from myQSlider import MyQSlider
 
@@ -56,8 +75,26 @@ class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
       self.alarmTimer.setSingleShot(True)
       self.alarmTimer.timeout.connect(self.playAlarm)
 
+      # handle alarm
+      self.alarmHandleDialog = AlarmHandleDialog(self)
+      self.alarmHandleDialog.alarmOffButton.clicked.connect(self.stopAlarm)
+      self.alarmHandleDialog.snoozeButton.clicked.connect(self.snoozeAlarm)
+      self.alarmHandleDialog.hide()
+
       # audio player elements
-      self.audioPlayer = None
+      self.audioPlayer = Player(self)
+      # connect the player and button signals
+      self.playPauseButton.clicked.connect(self.audioPlayer.togglePlayPause)
+      self.stopButton.clicked.connect(self.stop)
+      self.audioPlayer.currentPositionSignal.connect(self.updateSliderAndStatus)
+      self.backwardButton.clicked.connect(self.audioPlayer.lastTitle)
+      self.forwardButton.clicked.connect(self.audioPlayer.nextTitle)
+      self.incVolumeButton.clicked.connect(self.audioPlayer.incVolume)
+      self.decVolumeButton.clicked.connect(self.audioPlayer.decVolume)
+      self.audioPlayer.currentStateSignal.connect(self.updatePlayButton)
+      self.audioPlayer.currentSongArtistTitleSignal.connect(self.updateArtistTitle)
+      self.positionSlider.sliderReleased.connect(self.seek)
+      self.positionSlider.clicked.connect(self.seek)
       self.currentArtistTitle = ""
 
       # set status
@@ -73,36 +110,37 @@ class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
       if self.alarmActive:
          self.alarmTimer.stop()
          self.alarmActive = False
+         self.toggleAlarmOnOffButton.setIcon(QIcon(":/icons/Alarm-clock-disabled-icon.png"))
       else:
          timeTillNextAlarm = (ONEDAYMSEC + QTime.currentTime().msecsTo(self.alarmTime)) % ONEDAYMSEC
          self.alarmTimer.start(timeTillNextAlarm)
          self.alarmActive = True
+         self.toggleAlarmOnOffButton.setIcon(QIcon(":/icons/Alarm-clock-icon.png"))
       self.updateStatusBar("")
 
    def playAlarm(self):
-      self.setupAndStartPlayer([self.alarmSongPath])
+      self.stop() # just in case ...
+      self.audioPlayer.setFileList([self.alarmSongPath])
+      self.alarmHandleDialog.show()
+
+   def stopAlarm(self):
+      self.stop()
+      self.alarmHandleDialog.hide()
+      self.toggleAlarmOnOff()
+      self.toggleAlarmOnOff()
+
+   def snoozeAlarm(self):
+      pass
 
    def playAudio(self):
+      self.stop() # just in case ...
       dialog = PlayAudioDialog(self)
       if dialog.exec_():
          if dialog.sleep:
              rawTime = dialog.sleepTime
              timeToSleep = (rawTime.hour() * 60 + rawTime.minute()) * 60 * 1000
              self.sleepTimer.start(timeToSleep)
-         self.setupAndStartPlayer(['file://' + dialog.filePath])
-
-   def setupAndStartPlayer(self, files):
-      self.audioPlayer = Player(self, files)
-      # connect the player and button signals
-      self.playPauseButton.clicked.connect(self.audioPlayer.togglePlayPause)
-      self.stopButton.clicked.connect(self.stop)
-      self.audioPlayer.currentPositionSignal.connect(self.updateSliderAndStatus)
-      self.incVolumeButton.clicked.connect(self.audioPlayer.incVolume)
-      self.decVolumeButton.clicked.connect(self.audioPlayer.decVolume)
-      self.audioPlayer.currentStateSignal.connect(self.updatePlayButton)
-      self.audioPlayer.currentSongArtistTitleSignal.connect(self.updateArtistTitle)
-      self.positionSlider.sliderReleased.connect(self.seek)
-      self.positionSlider.clicked.connect(self.seek)
+         self.audioPlayer.setFileList(dialog.filelist)
 
    def seek(self):
       self.audioPlayer.seek(self.positionSlider.value())
@@ -120,7 +158,7 @@ class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
       self.playPauseButton.setIcon(QIcon(":/icons/control-play-icon.png"))
       if self.audioPlayer == None:
          pass
-      elif self.audioPlayer.playing:
+      else:
          self.audioPlayer.stop()
 
    def updateSliderAndStatus(self, currentPosition, duration):

@@ -17,12 +17,12 @@
 
 import sys
 
-from PyQt4.QtGui import QApplication
+from PyQt4.QtCore import *
+from PyQt4.QtGui import *
 
-try:
-   _encoding = QApplication.UnicodeUTF8
-   def _translate(context, text, disambig):
-      return QApplication.translate(context, text, disambig, _encoding)
-except AttributeError:
-    def _translate(context, text, disambig):
-       return QApplication.translate(context, text, disambig)
+import alarmHandleDialog_ui
+
+class AlarmHandleDialog(QDialog, alarmHandleDialog_ui.Ui_alarmHandleDialog):
+   def __init__(self, parent=None):
+      super(AlarmHandleDialog, self).__init__(parent)
+      self.setupUi(self)

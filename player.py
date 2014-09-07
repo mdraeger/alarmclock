@@ -11,7 +11,7 @@ class Player(QObject):
     currentSongArtistTitleSignal = pyqtSignal(str)
     currentStateSignal = pyqtSignal(bool)
 
-    def __init__(self, parent, playlist):
+    def __init__(self, parent):
         super(Player, self).__init__(parent)
         self.playing = False
         self.player = Gst.ElementFactory.make('playbin', 'player')
@@ -19,14 +19,11 @@ class Player(QObject):
         bus.add_signal_watch()
         bus.connect("message", self.on_message)
         self.player.connect("about-to-finish", self.on_finished)
-        self.playlist = playlist
-        self.__emitCurrentPosition__()
+        self.playlist = []
+        self.index = 0
 
         self.positionTimer = QTimer(self)
         self.positionTimer.timeout.connect(self.__emitCurrentPosition__)
-        # initialize with first song from list
-        self.player.set_property("uri", self.playlist.pop(0))
-        self.__play__()
 
     def __emitCurrentPosition__(self):
         current = self.player.query_position(Gst.Format.TIME)[1] / Gst.SECOND
@@ -51,8 +48,8 @@ class Player(QObject):
             self.currentSongArtistTitleSignal.emit("%s (%s)" % (title, artist))
 
     def on_finished(self, player):
-        if len (self.playlist) > 0:
-            self.player.set_property("uri", self.playlist.pop(0))
+        if len (self.playlist) > self.index +1:
+            self.nextTitle()
         else:
             self.playing = False
             duration = self.player.query_duration(Gst.Format.TIME)[1] / Gst.SECOND
@@ -61,18 +58,39 @@ class Player(QObject):
             self.currentStateSignal.emit(self.playing)
 
 
+    def setFileList(self, playlist):
+       self.playlist = playlist
+       # initialize with first song from list
+       self.player.set_property("uri", self.playlist[self.index])
+       self.togglePlayPause()
+        
+
     def __play__(self):
         self.player.set_state(Gst.State.PLAYING)
         self.playing = True
         self.positionTimer.start(1000)
         
     def __pause__(self):
-        if not self.playing: 
-            raise Exception('StateError', 'A non-playing player cannot pause')
-        self.player.set_state(Gst.State.PAUSED)
-        self.playing = False
-        self.positionTimer.stop()
-        self.__emitCurrentPosition__()
+       if not self.playing: 
+          raise Exception('StateError', 'A non-playing player cannot pause')
+       self.player.set_state(Gst.State.PAUSED)
+       self.playing = False
+       self.positionTimer.stop()
+       self.__emitCurrentPosition__()
+
+    def lastTitle(self):
+       if self.index > 0:
+          self.stop()
+          self.index -= 1
+          self.player.set_property("uri", self.playlist[self.index])
+          self.togglePlayPause()
+      
+    def nextTitle(self):
+       if len(self.playlist) > self.index +1:
+          self.stop()
+          self.index += 1
+          self.player.set_property("uri", self.playlist[self.index])
+          self.togglePlayPause()
 
     def togglePlayPause(self):
         if self.playing:

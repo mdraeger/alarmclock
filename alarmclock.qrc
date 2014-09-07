@@ -1,6 +1,9 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
    <file>icons/Adium-Bird-Sleep-icon.png</file>
+   <file>icons/Alarm-clock-disabled-icon.png</file>
+   <file>icons/Alarm-clock-icon.png</file>
+   <file>icons/Cute-Ball-Stop-icon.png</file>
    <file>icons/control-fastforward-icon.png</file>
    <file>icons/control-pause-icon.png</file>
    <file>icons/control-play-icon.png</file>
