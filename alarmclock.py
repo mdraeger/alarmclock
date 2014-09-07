@@ -60,6 +60,9 @@ class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
       self.audioPlayer = None
       self.currentArtistTitle = ""
 
+      # set status
+      self.updateStatusBar("")
+
    def chooseAlarm(self):
       dialog = ChooseAlarmDialog(self.alarmSongPath, self)
       if dialog.exec_():
@@ -69,10 +72,12 @@ class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
    def toggleAlarmOnOff(self):
       if self.alarmActive:
          self.alarmTimer.stop()
+         self.alarmActive = False
       else:
          timeTillNextAlarm = (ONEDAYMSEC + QTime.currentTime().msecsTo(self.alarmTime)) % ONEDAYMSEC
          self.alarmTimer.start(timeTillNextAlarm)
          self.alarmActive = True
+      self.updateStatusBar("")
 
    def playAlarm(self):
       self.setupAndStartPlayer([self.alarmSongPath])
@@ -87,15 +92,17 @@ class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
          self.setupAndStartPlayer(['file://' + dialog.filePath])
 
    def setupAndStartPlayer(self, files):
-         self.audioPlayer = Player(self, files)
-         # connect the player and button signals
-         self.playPauseButton.clicked.connect(self.audioPlayer.togglePlayPause)
-         self.stopButton.clicked.connect(self.stop)
-         self.audioPlayer.currentPositionSignal.connect(self.updateSliderAndStatus)
-         self.audioPlayer.currentStateSignal.connect(self.updatePlayButton)
-         self.audioPlayer.currentSongArtistTitleSignal.connect(self.updateArtistTitle)
-         self.positionSlider.sliderReleased.connect(self.seek)
-         self.positionSlider.clicked.connect(self.seek)
+      self.audioPlayer = Player(self, files)
+      # connect the player and button signals
+      self.playPauseButton.clicked.connect(self.audioPlayer.togglePlayPause)
+      self.stopButton.clicked.connect(self.stop)
+      self.audioPlayer.currentPositionSignal.connect(self.updateSliderAndStatus)
+      self.incVolumeButton.clicked.connect(self.audioPlayer.incVolume)
+      self.decVolumeButton.clicked.connect(self.audioPlayer.decVolume)
+      self.audioPlayer.currentStateSignal.connect(self.updatePlayButton)
+      self.audioPlayer.currentSongArtistTitleSignal.connect(self.updateArtistTitle)
+      self.positionSlider.sliderReleased.connect(self.seek)
+      self.positionSlider.clicked.connect(self.seek)
 
    def seek(self):
       self.audioPlayer.seek(self.positionSlider.value())
@@ -122,7 +129,12 @@ class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
       self.updateStatusBar("%s, %d:%02d / %d:%02d" % (self.currentArtistTitle, currentPosition/60, currentPosition %60, duration /60, duration % 60))
 
    def updateStatusBar(self, text):
-      self.statusbar.showMessage(text)
+      alarmInfo = "Wecker: "
+      if self.alarmActive:
+         alarmInfo += self.alarmTime.toString("hh:mm") + "; "
+      else:
+         alarmInfo += "aus; "
+      self.statusbar.showMessage(alarmInfo + text)
 
    def setAlarmTime(self):
       dialog = SetAlarmTimeDialog(self.alarmTime, self)

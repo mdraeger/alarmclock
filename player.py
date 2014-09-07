@@ -95,3 +95,11 @@ class Player(QObject):
         self.currentPositionSignal.emit(0.0, duration)
         self.positionTimer.stop()
         self.currentStateSignal.emit(self.playing)
+
+    def incVolume(self):
+       currentVol = self.player.get_property('volume')
+       self.player.set_property('volume', min(1.0, currentVol + 0.1))
+
+    def decVolume(self):
+       currentVol = self.player.get_property('volume')
+       self.player.set_property('volume', max(0.0, currentVol - 0.1))
