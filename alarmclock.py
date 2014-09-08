@@ -156,10 +156,7 @@ class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
    
    def stop(self):
       self.playPauseButton.setIcon(QIcon(":/icons/control-play-icon.png"))
-      if self.audioPlayer == None:
-         pass
-      else:
-         self.audioPlayer.stop()
+      self.audioPlayer.stop()
 
    def updateSliderAndStatus(self, currentPosition, duration):
       self.positionSlider.setRange(0,duration)
