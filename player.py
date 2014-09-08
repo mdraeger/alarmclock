@@ -49,7 +49,8 @@ class Player(QObject):
 
     def on_finished(self, player):
         if len (self.playlist) > self.index +1:
-            self.nextTitle()
+          self.index += 1
+          self.player.set_property("uri", self.playlist[self.index])
         else:
             self.playing = False
             duration = self.player.query_duration(Gst.Format.TIME)[1] / Gst.SECOND

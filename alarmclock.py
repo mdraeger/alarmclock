@@ -130,7 +130,11 @@ class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
       self.toggleAlarmOnOff()
 
    def snoozeAlarm(self):
-      pass
+      self.stop()
+      self.alarmTimer.stop()
+      startOverIn = (self.snoozeTime.minute()*60 + self.snoozeTime.second())*1000
+      self.alarmTimer.start(startOverIn)
+      self.alarmHandleDialog.hide()
 
    def playAudio(self):
       self.stop() # just in case ...
@@ -176,6 +180,7 @@ class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
       if dialog.exec_():
          self.alarmTime = dialog.alarmTime
          self.settingsHandler.set('alarmtime', self.alarmTime.toString("hh:mm"))
+         self.toggleAlarmOnOff()
          self.toggleAlarmOnOff()
 
 if __name__ == '__main__':
