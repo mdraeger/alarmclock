@@ -34,10 +34,10 @@ class ChooseAlarmDialog(QDialog, chooseAlarmDialog_ui.Ui_chooseAlarmDialog):
       self.alarmSongPath = alarmSongPath
 
    def chooseFile(self):
-      dialog = QFileDialog(self)
+      dialog = QFileDialog(self, caption=_translate("alarmclock", "Wecklied aussuchen",     None), directory=".",filter=_translate("alarmclock", "Audio files *.mp3 *.ogg *.wav", None))
       dialog.resize(300,200)  
-      fileName = dialog.getOpenFileName(self, caption=_translate("alarmclock", "Wecklied aussuchen",     None), directory=".",filter=_translate("alarmclock", "Audio files *.mp3 *.ogg *.wav", None))
-      self.pathToFileEdit.setText(fileName)
+      dialog.fileSelected.connect(self.pathToFileEdit.setText)
+      dialog.open()
 
    def accept(self):
       self.alarmSongPath = self.pathToFileEdit.text()
