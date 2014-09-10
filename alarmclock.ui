@@ -39,7 +39,7 @@ QToolButton {
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>165</y>
+      <y>150</y>
       <width>16</width>
       <height>16</height>
      </rect>
@@ -56,7 +56,7 @@ QToolButton {
     <property name="geometry">
      <rect>
       <x>230</x>
-      <y>165</y>
+      <y>150</y>
       <width>16</width>
       <height>16</height>
      </rect>
@@ -73,7 +73,7 @@ QToolButton {
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>165</y>
+      <y>150</y>
       <width>16</width>
       <height>16</height>
      </rect>
@@ -90,7 +90,7 @@ QToolButton {
     <property name="geometry">
      <rect>
       <x>100</x>
-      <y>165</y>
+      <y>150</y>
       <width>16</width>
       <height>16</height>
      </rect>
@@ -107,7 +107,7 @@ QToolButton {
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>165</y>
+      <y>150</y>
       <width>16</width>
       <height>16</height>
      </rect>
@@ -124,7 +124,7 @@ QToolButton {
     <property name="geometry">
      <rect>
       <x>140</x>
-      <y>165</y>
+      <y>150</y>
       <width>16</width>
       <height>16</height>
      </rect>
@@ -141,7 +141,7 @@ QToolButton {
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>20</y>
+      <y>5</y>
       <width>32</width>
       <height>32</height>
      </rect>
@@ -164,7 +164,7 @@ QToolButton {
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>100</y>
+      <y>85</y>
       <width>32</width>
       <height>32</height>
      </rect>
@@ -174,7 +174,7 @@ QToolButton {
     </property>
     <property name="icon">
      <iconset resource="alarmclock.qrc">
-      <normaloff>:/icons/Alarm-clock-disabled-icon.png</normaloff>:/icons/Alarm-clock-icon.png</iconset>
+      <normaloff>:/icons/Alarm-clock-disabled-icon.png</normaloff>:/icons/Alarm-clock-disabled-icon.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -187,7 +187,7 @@ QToolButton {
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>20</y>
+      <y>5</y>
       <width>32</width>
       <height>32</height>
      </rect>
@@ -210,7 +210,7 @@ QToolButton {
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>90</y>
+      <y>75</y>
       <width>32</width>
       <height>32</height>
      </rect>
@@ -233,7 +233,7 @@ QToolButton {
     <property name="geometry">
      <rect>
       <x>90</x>
-      <y>20</y>
+      <y>5</y>
       <width>121</width>
       <height>121</height>
      </rect>

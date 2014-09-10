@@ -51,7 +51,7 @@ class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
       self.setupUi(self)
       self.clockWidget = PyAnalogClock(self.clockFrame)
       self.positionSlider = MyQSlider(self.centralwidget)
-      self.positionSlider.setGeometry(QRect(9, 144, 281, 20))
+      self.positionSlider.setGeometry(QRect(9, 128, 281, 20))
       self.positionSlider.setOrientation(Qt.Horizontal)
       self.positionSlider.setObjectName("positionSlider")
 

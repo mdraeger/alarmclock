@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'chooseAlarmDialog.ui'
 #
-# Created: Sun Sep  7 23:55:04 2014
+# Created: Wed Sep 10 18:11:41 2014
 #      by: PyQt4 UI code generator 4.11.1
 #
 # WARNING! All changes made in this file will be lost!
