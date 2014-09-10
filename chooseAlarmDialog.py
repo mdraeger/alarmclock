@@ -36,6 +36,7 @@ class ChooseAlarmDialog(QDialog, chooseAlarmDialog_ui.Ui_chooseAlarmDialog):
    def chooseFile(self):
       dialog = QFileDialog(self, caption=_translate("alarmclock", "Wecklied aussuchen",     None), directory=".",filter=_translate("alarmclock", "Audio files *.mp3 *.ogg *.wav", None))
       dialog.resize(300,200)  
+      dialog.setReadOnly(True)
       dialog.fileSelected.connect(self.pathToFileEdit.setText)
       dialog.open()
 
