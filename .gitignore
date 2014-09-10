@@ -1,5 +1,6 @@
 __pycache__/
 
+*.xml
 *.swp
 *.py[cod]
 *.log

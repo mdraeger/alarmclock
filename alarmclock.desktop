@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=Wecker
+Comment=Alarm
+Icon=/home/pi/alarmclock/icons/Alarm-clock-icon.png
+Path=/home/pi/alarmclock/
+Exec=/home/pi/alarmclock/alarmclock.py
+NoDisplay=true
