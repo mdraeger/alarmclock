@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'playAudioDialog.ui'
 #
-# Created: Wed Sep 10 18:11:41 2014
-#      by: PyQt4 UI code generator 4.11.1
+# Created: Fri Sep 19 10:35:45 2014
+#      by: PyQt4 UI code generator 4.11.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -26,24 +26,24 @@ except AttributeError:
 class Ui_playAudioDialog(object):
     def setupUi(self, playAudioDialog):
         playAudioDialog.setObjectName(_fromUtf8("playAudioDialog"))
-        playAudioDialog.resize(318, 231)
+        playAudioDialog.resize(250, 158)
         self.label = QtGui.QLabel(playAudioDialog)
-        self.label.setGeometry(QtCore.QRect(11, 10, 231, 16))
+        self.label.setGeometry(QtCore.QRect(9, 10, 231, 16))
         self.label.setObjectName(_fromUtf8("label"))
         self.sleepModeCheckBox = QtGui.QCheckBox(playAudioDialog)
-        self.sleepModeCheckBox.setGeometry(QtCore.QRect(150, 167, 111, 19))
+        self.sleepModeCheckBox.setGeometry(QtCore.QRect(148, 100, 111, 19))
         self.sleepModeCheckBox.setObjectName(_fromUtf8("sleepModeCheckBox"))
         self.sleepTimeEdit = QtGui.QTimeEdit(playAudioDialog)
         self.sleepTimeEdit.setEnabled(False)
-        self.sleepTimeEdit.setGeometry(QtCore.QRect(10, 170, 118, 22))
+        self.sleepTimeEdit.setGeometry(QtCore.QRect(8, 103, 118, 22))
         self.sleepTimeEdit.setTime(QtCore.QTime(1, 0, 0))
         self.sleepTimeEdit.setObjectName(_fromUtf8("sleepTimeEdit"))
         self.buttonBox = QtGui.QDialogButtonBox(playAudioDialog)
-        self.buttonBox.setGeometry(QtCore.QRect(154, 200, 159, 24))
+        self.buttonBox.setGeometry(QtCore.QRect(80, 130, 159, 24))
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.listView = QtGui.QListView(playAudioDialog)
-        self.listView.setGeometry(QtCore.QRect(10, 30, 301, 131))
+        self.listView.setGeometry(QtCore.QRect(8, 30, 231, 61))
         self.listView.setObjectName(_fromUtf8("listView"))
 
         self.retranslateUi(playAudioDialog)

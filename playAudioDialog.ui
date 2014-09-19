@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>318</width>
-    <height>231</height>
+    <width>250</width>
+    <height>158</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,7 +16,7 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>11</x>
+     <x>9</x>
      <y>10</y>
      <width>231</width>
      <height>16</height>
@@ -29,8 +29,8 @@
   <widget class="QCheckBox" name="sleepModeCheckBox">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>167</y>
+     <x>148</x>
+     <y>100</y>
      <width>111</width>
      <height>19</height>
     </rect>
@@ -45,8 +45,8 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>170</y>
+     <x>8</x>
+     <y>103</y>
      <width>118</width>
      <height>22</height>
     </rect>
@@ -62,8 +62,8 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>154</x>
-     <y>200</y>
+     <x>80</x>
+     <y>130</y>
      <width>159</width>
      <height>24</height>
     </rect>
@@ -75,10 +75,10 @@
   <widget class="QListView" name="listView">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>8</x>
      <y>30</y>
-     <width>301</width>
-     <height>131</height>
+     <width>231</width>
+     <height>61</height>
     </rect>
    </property>
   </widget>
