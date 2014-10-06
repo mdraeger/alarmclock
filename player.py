@@ -62,6 +62,7 @@ class Player(QObject):
     def setFileList(self, playlist):
        self.playlist = playlist
        # initialize with first song from list
+       self.index = 0
        self.player.set_property("uri", self.playlist[self.index])
        self.togglePlayPause()
         
@@ -117,7 +118,7 @@ class Player(QObject):
 
     def incVolume(self):
        currentVol = self.player.get_property('volume')
-       self.player.set_property('volume', min(1.0, currentVol + 0.1))
+       self.player.set_property('volume', min(3.0, currentVol + 0.1))
 
     def decVolume(self):
        currentVol = self.player.get_property('volume')
