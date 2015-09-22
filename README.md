@@ -10,6 +10,8 @@ The gui is optimized for a 320x240 LCD display with touch input.
 ## Requirements
 The player requires Gstreamer-1.0 or later and the python-gobject bindings install for Python3. Also Qt4.
 
+The required version of Python is 3.2 or later. If you run it with a sooner version than Python3.4, you need to install the pathlib library, which can be done with `pip install pathlib`. 
+
 ## Design
 
 The design was created with Qt designer, the analog clock widget is hand written, taken from [here!](http://ftp.ics.uci.edu/pub/centos0/ics-custom-build/BUILD/PyQt-x11-gpl-4.7.2/examples/designer/plugins/widgets/analogclock.py)
