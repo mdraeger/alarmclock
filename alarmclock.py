@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-##    alarmclock (resembles a an alarm clock for raspberry pi with a 
-##    2.8" LCD touch display 
+##    alarmclock (resembles a an alarm clock for raspberry pi with a
+##    2.8" LCD touch display
 ##    Copyright (C) 2014  Marco Draeger
 ##
 ##    This program is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 ##    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
+import pathlib
 
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
@@ -28,7 +29,7 @@ import alarmclock_ui
 from chooseAlarmDialog import ChooseAlarmDialog
 from playAudioDialog import PlayAudioDialog
 from setAlarmTimeDialog import SetAlarmTimeDialog
-from alarmHandleDialog import AlarmHandleDialog 
+from alarmHandleDialog import AlarmHandleDialog
 from clockWidget import PyAnalogClock
 from myQSlider import MyQSlider
 
@@ -103,8 +104,8 @@ class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
    def chooseAlarm(self):
       dialog = ChooseAlarmDialog(self.alarmSongPath, self)
       if dialog.exec_():
-         self.alarmSongPath = dialog.alarmSongPath
-         self.settingsHandler.set('alarmsong', 'file://' + self.alarmSongPath)
+         self.alarmSongPath = pathlib.Path(dialog.alarmSongPath).as_uri()
+         self.settingsHandler.set('alarmsong', self.alarmSongPath)
 
    def toggleAlarmOnOff(self):
       if self.alarmActive:
@@ -157,7 +158,7 @@ class MainWindow(QMainWindow, alarmclock_ui.Ui_mainWindow):
 
    def updateArtistTitle(self, artistTitle):
       self.currentArtistTitle = artistTitle
-   
+
    def stop(self):
       self.playPauseButton.setIcon(QIcon(":/icons/control-play-icon.png"))
       self.audioPlayer.stop()

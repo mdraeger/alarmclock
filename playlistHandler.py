@@ -1,5 +1,5 @@
-##    alarmclock (resembles a an alarm clock for raspberry pi with a 
-##    2.8" LCD touch display 
+##    alarmclock (resembles a an alarm clock for raspberry pi with a
+##    2.8" LCD touch display
 ##    Copyright (C) 2014  Marco Draeger
 ##
 ##    This program is free software: you can redistribute it and/or modify
@@ -17,6 +17,7 @@
 
 import os
 import sys
+import pathlib
 
 import xml.dom
 from xml.dom import Node
@@ -36,27 +37,30 @@ class PlaylistHandler(object):
          if isDirectory:
             playlists[name] = Playlist(name, self.__getFiles__(path))
          else:
-            playlists[name] = Playlist(name, ['file://' + path])
+            playlists[name] = Playlist(name, [self.__path2uri__(path)])
       return playlists
 
    def __getFiles__(self, path):
       files = []
       for file in os.listdir(path):
          if file.endswith(".mp3"):
-            files.append('file://' + os.path.join(path, file))
+            files.append(self.__path2uri__(os.path.join(path, file)))
       return sorted(files, key = str.lower)
+
+   def __path2uri__(self, path):
+      pathlib.Path(path).as_uri()
 
 class Playlist(object):
    def __init__(self, name, filelist):
       self.__name__ = name
       self.__filelist__ = filelist
-      
+
    def name(self):
       return self.__name__
 
    def filelist(self):
       return self.__filelist__
-      
+
 if __name__ == '__main__':
    filename = 'playlists.xml'
    handler = PlaylistHandler(filename)
